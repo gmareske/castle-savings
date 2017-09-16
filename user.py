@@ -1,3 +1,5 @@
+from goal import Goal
+
 class User(object):
     
     def __init__(self, name, number):
@@ -12,6 +14,13 @@ class User(object):
         """
         pass
 
-    def add_goal(self, goal):
+    def add_goal(self, name, amt, balance=0):
+        goal = Goal(name,amt,balance)
         self.goals.append(goal)
+
+    def find_goal(self, query):
+        for goal in self.goals:
+            if goal.name == query:
+                return goal
+        return None
 
