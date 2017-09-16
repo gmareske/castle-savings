@@ -31,7 +31,7 @@ def find_amount(sent):
             pass
         try:
             amount = w2n.word_to_num(word)
-        except Error:
+        except:
             pass
     return amount
 
@@ -57,16 +57,19 @@ def parse_msg(text, user):
     blob = TextBlob(text.lower())
     action, amount, goal = find_candidates(blob)
     print(action, amount, goal)
-    #generate_response(action,amount,goal,text,user)
+    return generate_response(action,amount,goal,text,user)
 
-def generate_respone(action,amt,goal,text,user):
+def generate_response(action,amt,goal,text,user):
     if action in ["save", "spend"]:
-        goal = user.find_goal(goal)
+        goalobj = user.find_goal(goal)
+        if not goalobj:
+            return "{} isn't one of your goals.".format(goal)
         if action == "spend":
             amt *= -1
-        goal.balance += amt
-        #generate_report(goal)
+        goalobj.balance += amt
+        return "Have saved ${} out of ${} for {}".format(goalobj.balance,goalobj.target,goalobj.name)
 
     elif action == "goal":
-        user.add_goal(amt,goal)
-        return "Now we're saving for a {}, which will cost about {}.".format(goal,amt)
+        user.add_goal(goal,amt)
+        print(user.goals)
+        return "Now we're saving for {}, which will cost about ${}.".format(goal,amt)

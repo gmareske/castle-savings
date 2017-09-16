@@ -7,6 +7,9 @@ from user import User
 
 app = Flask(__name__)
 
+GOD = User("Griffin", "+19132068204")
+GOD.add_goal("yacht", 100000)
+
 @app.route("/hello",methods=['GET'])
 def hello():
     """ respond to basic web request """
@@ -16,11 +19,14 @@ def hello():
 def reply():
     """respond to text messages"""
     print("got a text!")
+    msg = request.form['Body']
+    print(msg)
+    reply = parse_msg(msg,GOD)
     resp = MessagingResponse()
-    msg = Message().body("Hey ho, how do you do?")
-    resp.message("Hey ho, how do you do?")
+    #msg = Message().body("Hey ho, how do you do?")
+    resp.message(reply)
     return str(resp)
-           
+
 if __name__ == "__main__":
     app.run(debug=True)
     # god = User("Griffin", "+19132068204")
