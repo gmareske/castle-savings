@@ -53,7 +53,6 @@ def find_candidates(blob):
         action = find_action(sent)
         amount = find_amount(sent)
         goal = find_goal(sent)
-
     return action, amount, goal
 
 def parse_msg(text, user):
@@ -87,5 +86,9 @@ def generate_response(action,amt,goal,text,user):
         set_goal(goal,amt)
     elif action == "list" or goal == "goals":
         return ', '.join(g.name for g in user.goals)
+    elif goal == None:
+        return "I didn't understand your goal. Please send the message again, with a goal at the end."
+    elif amount == None:
+        return "How much are we talking here? Please send the message again, with an amount that you are saving."
     else:
         return "I didn't understand your message :("
