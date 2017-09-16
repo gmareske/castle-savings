@@ -8,9 +8,10 @@ def clean_text(text):
 
 def find_action(sent):
     action = None
-    save_words = ["saved","save","stored","deposited"]
-    spend_words = ["spent", "spend", "withdrew", "withdraw"]
-    goal_words = ["goal", "buy", "new"]
+    save_words = ["saved","save","stored","deposited",]
+    spend_words = ["spent", "spend", "withdrew", "withdraw",]
+    goal_words = ["goal", "buy", "new",]
+    list_words = ["list",]
     for word, pos in sent.pos_tags:
         if pos[0] == "V":
             if word in save_words:
@@ -19,6 +20,8 @@ def find_action(sent):
                 action = "spend"
             elif word in goal_words:
                 action = "goal"
+            elif word in list_words:
+                action = "list"
             else:
                 action = word
     return action
@@ -69,8 +72,11 @@ def generate_response(action,amt,goal,text,user):
             amt *= -1
         goalobj.balance += amt
         return "Have saved ${} out of ${} for {}".format(goalobj.balance,goalobj.target,goalobj.name)
-
     elif action == "goal":
         user.add_goal(goal,amt)
         print(user.goals)
         return "Now we're saving for {}, which will cost about ${}.".format(goal,amt)
+    elif action == "list" or goal == "goals":
+        return ', '.join(g.name for g in user.goals)
+    else:
+        return "I didn't understand your message :("

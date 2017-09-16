@@ -8,11 +8,11 @@ class User(object):
         self.name = name
         self.number = number
         
-    def add_msg(self, from_who, msg):
+    def add_msg(self, msg, from_user=True):
         """
         Add a message to the message history
         """
-        pass
+        self.message.append({'msg': msg, 'from_user': from_user})
 
     def add_goal(self, name, amt, balance=0):
         goal = Goal(name,amt,balance)
