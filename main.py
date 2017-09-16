@@ -34,7 +34,7 @@ def app_view():
 @app.route("/form",methods=['GET','POST'])
 def handle_form():
     default_user = USERS["+19132068204"] # Griffin
-    msg = request.form.get('text')
+    msg = request.form.get('text') or request.args.get('text')
     reply = parse_msg(msg,default_user)
     user.add_msg(msg)
     user.add_msg(reply, from_user=False)
@@ -53,6 +53,7 @@ def reply():
     reply = parse_msg(msg,user)
     user.add_msg(msg)
     user.add_msg(reply, from_user=False)
+    print(user.messages)
     resp = MessagingResponse()
     resp.message(reply)
     return str(resp)

@@ -13,8 +13,11 @@
     </div>
     <div class="col-s12 col-md6">
       <div class="message-wrapper">
-	<div class="message bot"><p>This is a message from the bot</p></div>
-	<div class="message"><p>This is a message from the user</p></div>
+	{% for msg in user.messages %}
+	<div class="message {% if msg.from_user %}user{% else %}bot{% endif %}">
+	  <p>{{msg.msg}}</p>
+	</div>
+	{% endfor %}
       </div>
       <div class="message-form">
 	<form action="/form">
