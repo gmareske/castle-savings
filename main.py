@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, url_for
 #from textblob import TextBlob
 from twilio.twiml.messaging_response import MessagingResponse, Message
 
@@ -28,7 +28,8 @@ def hello():
 
 @app.route("/app",methods=['GET'])
 def app_view():
-    return render_template('app.html')
+    default_user = USERS["+19132068204"]
+    return render_template('app.html',user=default_user)
 
 @app.route("/form",methods=['GET','POST'])
 def handle_form():
@@ -37,7 +38,7 @@ def handle_form():
     reply = parse_msg(msg,default_user)
     user.add_msg(msg)
     user.add_msg(reply, from_user=False)
-    
+    return redirect(url_for('app'))
 
 @app.route("/",methods=['GET','POST'])
 def reply():
