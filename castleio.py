@@ -3,7 +3,8 @@ from user import User
 from goal import Goal
 from word2number import w2n
 def clean_text(text):
-    return text
+    text = text.replace("$", "").replace(",", "").replace("!", "").replace("@", " ").replace("#", "").replace("%", " ").replace("^", " ").replace("&", " ").replace("(", "").replace(")", "").replace("*", "").replace(":", "").replace(";", "")
+    return(text)
 
 def find_action(sent):
     action = None
