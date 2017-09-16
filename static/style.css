@@ -16,8 +16,9 @@
 
 
 .info i {
-  color: green;
+  color: grey;
 }
+
 
 .app {
     font-size: 16px;
@@ -49,7 +50,7 @@
     border-left: solid 5px transparent;
     border-right: solid 5px transparent;
 }
-.bot {    
+.bot {
     background-color: lightgray;
 }
 .bot:after {
