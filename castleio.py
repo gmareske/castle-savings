@@ -66,8 +66,6 @@ def change_money(user, goal, amt):
         goalobj = user.find_goal(goal)
         if not goalobj:
             return "{} isn't one of your goals".format(goal)
-        if action == "spend":
-            amt *= -1
         goalobj.balance += amt
         if goalobj.balance >= goalobj.target:
             return "Congrats! you reached your savings goal of {} for {}!".format(goalobj.target, goalobj.name)
@@ -79,8 +77,10 @@ def set_goal(user,goal, amt):
         print(user.goals)
         return "Now we're saving for {}, which will cost ${}.".format(goal,amt)
 
-def generate_response(action,amt,goal,text,user):
+def generate_response(action,amt,goal,text,user): 
     if action in ["save", "spend"]:
+        if action == "spend":
+            amt *= -1
         return change_money(user, goal, amt)
     elif action == "goal":
         return set_goal(user,goal,amt)

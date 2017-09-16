@@ -36,9 +36,9 @@ def handle_form():
     default_user = USERS["+19132068204"] # Griffin
     msg = request.form.get('text') or request.args.get('text')
     reply = parse_msg(msg,default_user)
-    user.add_msg(msg)
-    user.add_msg(reply, from_user=False)
-    return redirect(url_for('app'))
+    default_user.add_msg(msg)
+    default_user.add_msg(reply, from_user=False)
+    return redirect(url_for('app_view'))
 
 @app.route("/",methods=['GET','POST'])
 def reply():
