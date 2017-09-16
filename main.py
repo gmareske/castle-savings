@@ -26,6 +26,10 @@ def hello():
     """ respond to basic web request """
     return render_template('index.html')
 
+@app.route("/app",methods=['GET'])
+def app_view():
+    return render_template('app.html')
+
 @app.route("/",methods=['GET','POST'])
 def reply():
     print("got a text!")
