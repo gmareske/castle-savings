@@ -65,7 +65,7 @@ def parse_msg(text, user):
 def change_money(user, goal, amt):
         goalobj = user.find_goal(goal)
         if not goalobj:
-            return "{} isn't one of your goals.".format(goal)
+            return "{} isn't one of your goals".format(goal)
         if action == "spend":
             amt *= -1
         goalobj.balance += amt
@@ -74,21 +74,21 @@ def change_money(user, goal, amt):
         else:
             return "Have saved ${} out of ${} for {}".format(goalobj.balance,goalobj.target,goalobj.name)
 
-def set_goal(goal, amt):
+def set_goal(user,goal, amt):
         user.add_goal(goal,amt)
         print(user.goals)
         return "Now we're saving for {}, which will cost ${}.".format(goal,amt)
 
 def generate_response(action,amt,goal,text,user):
     if action in ["save", "spend"]:
-        change_money(user, goal, amt)
+        return change_money(user, goal, amt)
     elif action == "goal":
-        set_goal(goal,amt)
+        return set_goal(user,goal,amt)
     elif action == "list" or goal == "goals":
         return ', '.join(g.name for g in user.goals)
     elif goal == None:
         return "I didn't understand your goal. Please send the message again, with a goal at the end."
-    elif amount == None:
+    elif amt == None:
         return "How much are we talking here? Please send the message again, with an amount that you are saving."
     else:
         return "I didn't understand your message :("
