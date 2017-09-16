@@ -1,0 +1,20 @@
+.black-text {
+  color: black !important;
+}
+.black-text:hover {
+  text-decoration: underline !important;
+  color: black !important;
+}
+
+#mainbanner {
+  height: 400px;
+  background-image: url('/static/img/coin.jpg');
+  background:  no-repeat center center;
+  background-size: cover;
+  opacity: 0.5;
+}
+
+
+.info i {
+  color: green;
+}
