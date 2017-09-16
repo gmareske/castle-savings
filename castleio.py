@@ -1,7 +1,7 @@
 from textblob import TextBlob
 from user import User
 from goal import Goal
-
+from word2number import w2n
 def clean_text(text):
     return text
 
@@ -28,6 +28,10 @@ def find_amount(sent):
         try:
             amount = float(word)
         except ValueError:
+            pass
+        try:
+            amount = w2n.word_to_num(word)
+        except Error:
             pass
     return amount
 
@@ -62,7 +66,7 @@ def generate_respone(action,amt,goal,text,user):
             amt *= -1
         goal.balance += amt
         #generate_report(goal)
-        
+
     elif action == "goal":
         user.add_goal(amt,goal)
         return "Now we're saving for a {}, which will cost about {}.".format(goal,amt)
