@@ -63,22 +63,15 @@ def parse_msg(text, user):
     print(action, amount, goal)
     return generate_response(action,amount,goal,text,user)
 
-def check_balance(user, goalobj):
-    if goalobj.balance >= goalobj.target:
-        user.remove_goal(goalobj.name)
-        return "Congradulations: you reached your goal to buy a {}!".format(goalobj.name)
-    else:
-        pass
-
 def change_money(user, goal, amt):
         goalobj = user.find_goal(goal)
         if not goalobj:
             return "{} isn't one of your goals.".format(goal)
-        if action == "spend":
-            amt *= -1
         goalobj.balance += amt
-        return "Have saved ${} out of ${} for {}".format(goalobj.balance,goalobj.target,goalobj.name)
-        check_balance(user, goalobj)
+        if goalobj.balance >= goalobj.target:
+            return "Congratulations: you reached your savings goal for {}!".format(goalobj.name)
+        else:
+            return "Have saved ${} out of ${} for {}".format(goalobj.balance,goalobj.target,goalobj.name)
 
 def set_goal(goal, amt):
         user.add_goal(goal,amt)
@@ -87,6 +80,8 @@ def set_goal(goal, amt):
 
 def generate_response(action,amt,goal,text,user):
     if action in ["save", "spend"]:
+        if action == "spend":
+            amt *= -1
         change_money(user, goal, amt)
     elif action == "goal":
         set_goal(goal,amt)
