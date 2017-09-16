@@ -12,7 +12,7 @@ class User(object):
         """
         Add a message to the message history
         """
-        self.message.append({'msg': msg, 'from_user': from_user})
+        self.messages.append({'msg': msg, 'from_user': from_user})
 
     def add_goal(self, name, amt, balance=0):
         goal = Goal(name,amt,balance)

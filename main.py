@@ -18,7 +18,7 @@ def add_user(name, phone_str):
 add_user("Griffin", "+19132068204")
 add_user("Philip", "+15155081003")
 USERS["+19132068204"].add_goal("loans", 100000) # Griffin
-USERS["+15155081003"].add_goal("flamethrower",6900)
+USERS["+15155081003"].add_goal("flamethrower",6900) # Philip
 # END TEST DATA
 
 @app.route("/hello",methods=['GET'])
@@ -29,6 +29,15 @@ def hello():
 @app.route("/app",methods=['GET'])
 def app_view():
     return render_template('app.html')
+
+@app.route("/form",methods=['GET','POST'])
+def handle_form():
+    default_user = USERS["+19132068204"] # Griffin
+    msg = request.form.get('text')
+    reply = parse_msg(msg,default_user)
+    user.add_msg(msg)
+    user.add_msg(reply, from_user=False)
+    
 
 @app.route("/",methods=['GET','POST'])
 def reply():
@@ -41,6 +50,8 @@ def reply():
     print(sender)
     print(msg)
     reply = parse_msg(msg,user)
+    user.add_msg(msg)
+    user.add_msg(reply, from_user=False)
     resp = MessagingResponse()
     resp.message(reply)
     return str(resp)
