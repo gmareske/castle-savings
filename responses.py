@@ -7,8 +7,8 @@ RESPS = {
         'What\'d ya say?? Forgettaboutit',
     ],
     'congrats': [
-    'Look at you go, you completed your savings goal for {goal}!',
-    'There is shade today because of a tree planted long ago. Enjoy the shade of {goal}',
+    'Look at you go, you completed your savings goal for your {goal}!',
+    'There is shade today because of a tree planted long ago. Enjoy the shade of your {goal}',
     'Enjoy the {goal}, you sure earned it.'
     ],
     'balanceup': [
@@ -18,14 +18,14 @@ RESPS = {
     ],
     'balancedown': [
         'Your {goal} will stay "someday" if you withdraw ${amt} everyday.',
-        'No matter how great to talent or effort, goals like {goal} take time and consitency.',
-        'It is not one extraordianry effort won\'t beat consistency when saving {amount} toward {goal}',
+        'No matter how great to talent or effort, goals like your {goal} take time and consitency.',
+        'It is not one extraordianry effort won\'t beat consistency when saving {amount} toward your {goal}',
     ],
     'new_goal': [
-        'A journey of a thousand miles starts with a single text message, and you\'re on your way to a {goal}',
-        'Pretty soon, you\'ll have {goal}',
-        'Today, save, tomorrow, {goal}',
-        'Price is what you pay. {goal} is what you get.'
+        'A journey of a thousand miles starts with a single text message, and you\'re on your way to your {goal}',
+        'Pretty soon, you\'ll have your {goal}',
+        'Today, save, tomorrow, your {goal}',
+        'Price is what you pay. Your {goal} is what you get.'
     ],
     'del_goal': [
     'You are no longer saving towards a {goal}. Be sure to save the money somewhere else.'

@@ -10,9 +10,9 @@ def clean_text(text):
 
 def find_action(sent):
     action = None
-    save_words = ["saved","save","stored","deposited","sabed", "savd", "sav", "socked", "put", "desposited", "pay towards", "pay"]
+    save_words = ["saved","save","stored","deposited","sabed", "savd", "sav", "socked", "put", "desposited", "pay towards", "pay", "paid"]
     spend_words = ["spent", "spend", "withdrew", "withdraw","reduced", "borrowed", "stole", "took", "took out", "removed"]
-    new_goal_words = ["goal", "buy", "new", "take a", "create"]
+    new_goal_words = ["goal", "buy", "new", "take a", "create", "make", "set"]
     del_goal_words = ["remove", "delete"]
     list_words = ["list", "tell", "tell me"]
 
@@ -46,12 +46,17 @@ def find_amount(sent):
             pass
     return amount
 
-def find_goal(sent):
+def find_goal(sent, user):
     goal = None
+    goals = []
+    for goalobj in user.goals:
+        goals.append(goalobj.name)
     for word, pos in sent.pos_tags:
-        if "NN" in pos:
+        if word in goals:
             goal = word
-
+            break
+        elif "NN" in pos:
+            goal = word
     return goal
 
 def find_extra(sent):
@@ -63,19 +68,19 @@ def find_extra(sent):
 
     return action
 
-def find_candidates(blob):
+def find_candidates(blob, user):
     action, amount, goal = (None, None, None)
     for sent in blob.sentences:
         action = find_extra(sent)
         action = find_action(sent)
         amount = find_amount(sent)
-        goal = find_goal(sent)
+        goal = find_goal(sent, user)
     return action, amount, goal
 
 def parse_msg(text, user):
     text = clean_text(text)
     blob = TextBlob(text.lower())
-    action, amount, goal = find_candidates(blob)
+    action, amount, goal = find_candidates(blob, user)
     print(action, amount, goal)
     return generate_response(action,amount,goal,text,user)
 
@@ -91,10 +96,6 @@ def check_goal(goal, user):
     if check_goal_helper(goal, user):
         return check_goal_helper(goal, user)
     goal = goal.singularize()
-    if check_goal_helper(goal, user):
-        return check_goal_helper(goal, user)
-    goal = Word(goal)
-    goal = goal.lemmatize()
     if check_goal_helper(goal, user):
         return check_goal_helper(goal, user)
 
