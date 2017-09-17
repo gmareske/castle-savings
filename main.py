@@ -31,7 +31,7 @@ def app_view():
     default_user = USERS["+19132068204"] 
     return render_template('app.html',user=default_user)
 
-@app.route("/form",methods=['GET','POST'])n
+@app.route("/form",methods=['GET','POST'])
 def handle_form():
     default_user = USERS["+19132068204"] 
     msg = request.form.get('text') or request.args.get('text')
