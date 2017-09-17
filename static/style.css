@@ -1,3 +1,6 @@
+.body {
+    font-family: 'Montserrat', 'Helvetica', sans-serif;
+}
 .black-text {
   color: black !important;
 }
@@ -54,7 +57,7 @@
     background-color: lightgray;
 }
 .bot:after {
-    content: '';
+pp    content: '';
     position: absolute;
     top: 100%;
     left: 20%;
