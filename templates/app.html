@@ -31,7 +31,7 @@
 	{% endfor %}
       </div>
       <div class="col-sm-12 col-md-6">
-	<div class="message-wrapper">
+	<div id="message-window" class="message-wrapper">
 	  {% for msg in user.messages %}
 	  <div class="message {% if msg.from_user %}user{% else %}bot{% endif %}">
 	    <p>{{msg.msg}}</p>
@@ -51,4 +51,9 @@
   </div>
 
 </div>
+<script>
+  // tiny fix for scrolling: always show bottom messages
+  const msgs = document.getElementById("message-window");
+  msgs.scrollTop = msgs.scrollHeight;
+</script>
 </body>
