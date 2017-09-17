@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template, url_for
 #from textblob import TextBlob
 from twilio.twiml.messaging_response import MessagingResponse, Message
 
-from castleio import parse_msg
+from castleio import parse_msg, unset_goal
 from user import User
 
 app = Flask(__name__)
@@ -28,12 +28,12 @@ def hello():
 
 @app.route("/app",methods=['GET'])
 def app_view():
-    default_user = USERS["+19132068204"] 
-    return render_template('app.html',user=default_user)
+    default_user = USERS["+19132068204"]
+    return render_template('app.html',user=default_user) #del_goal=lambda user, goal: unset_goal(user, goal))
 
 @app.route("/form",methods=['GET','POST'])
 def handle_form():
-    default_user = USERS["+19132068204"] 
+    default_user = USERS["+19132068204"]
     msg = request.form.get('text') or request.args.get('text')
     reply = parse_msg(msg,default_user)
     default_user.add_msg(msg)

@@ -18,6 +18,17 @@ class User(object):
         goal = Goal(name,amt,balance)
         self.goals.append(goal)
 
+    def remove_goal(self, goalobj):
+        for g in self.goals:
+            if g == goalobj:
+                try:
+                    self.goals.remove(g)
+                except ValueError:
+                    pass
+                else:
+                    pass
+
+
     def find_goal(self, query):
         for goal in self.goals:
             if goal.name == query:

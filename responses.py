@@ -27,6 +27,9 @@ RESPS = {
         'Today, save, tomorrow, {goal}',
         'Price is what you pay. {goal} is what you get.'
     ],
+    'del_goal': [
+    'You are no longer saving towards a {goal}. Be sure to save the money somewhere else.'
+    ],
     'list_goal': [
         'Here are your missions, if you choose to accept them: {goal}',
         'You have some big plans, here they are: {goal}',

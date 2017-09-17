@@ -10,9 +10,10 @@ def clean_text(text):
 
 def find_action(sent):
     action = None
-    save_words = ["saved","save","stored","deposited","sabed", "savd", "sav", "socked away", "put away", "desposited"]
+    save_words = ["saved","save","stored","deposited","sabed", "savd", "sav", "socked", "put", "desposited", "pay towards", "pay"]
     spend_words = ["spent", "spend", "withdrew", "withdraw","reduced", "borrowed", "stole", "took", "took out", "removed"]
-    goal_words = ["goal", "buy", "new", "take a"]
+    new_goal_words = ["goal", "buy", "new", "take a", "create"]
+    del_goal_words = ["remove", "delete"]
     list_words = ["list", "tell", "tell me"]
 
     for word, pos in sent.pos_tags:
@@ -21,8 +22,10 @@ def find_action(sent):
                 action = "save"
             elif word in spend_words:
                 action = "spend"
-            elif word in goal_words:
-                action = "goal"
+            elif word in del_goal_words:
+                action = "del_goal"
+            elif word in new_goal_words:
+                action = "new_goal"
             elif word in list_words:
                 action = "list"
             else:
@@ -112,15 +115,23 @@ def set_goal(user,goal, amt):
         print(user.goals)
         return get_response('new_goal',goal=goal,amt=amt)
 
+def unset_goal(user,goal):
+        goalobj = check_goal(goal, user)
+        user.remove_goal(goalobj)
+        print(user.goals)
+        return get_response('del_goal',goal=goal)
+
 def generate_response(action,amt,goal,text,user):
     if action in ["save", "spend"]:
         if not amt:
-            return "How much are we talking here? Please send the message agin, with a monetary amount"
+            return "How much are we talking here? Please send the message again, with a monetary amount"
         if action == "spend":
             amt *= -1
         return change_money(user, goal, amt)
-    elif action == "goal":
+    elif action == "new_goal":
         return set_goal(user,goal,amt)
+    elif action == "del_goal":
+        return unset_goal(user, goal)
     elif action == "list" or goal == "goals":
         return get_response('list_goal',goal=', '.join(g.name for g in user.goals))
     elif action == "greet":

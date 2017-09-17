@@ -43,7 +43,7 @@
     display: block;
     height: 100%;
     background-color: lightgreen;
-    border-radius: 3px;    
+    border-radius: 3px;
     transition: width 500ms ease-in-out;
 }
 .progress-bar {
@@ -84,7 +84,7 @@ input[type=submit] {
     position: relative;
 }
 .user {
-    
+
     text-align: right;
     background-color: #0076FF;
     color: azure;
@@ -115,4 +115,14 @@ input[type=submit] {
     border-top: solid 10px #lightgray;
     border-left: solid 10px transparent;
     border-right: solid 10px transparent;
+}
+.remove-goal-button {
+  position: relative;
+  float: right;
+  float: top;
+  cursor: pointer;
+}
+.remove-goal-button:hover {
+  color: red;
+  cursor: pointer;
 }

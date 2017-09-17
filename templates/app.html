@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="col-md-12 well">
-    <h1>Save It!</h1>
+    <h1><a href="/hello" class="black-text"> Save It!</a></h1>
     <h3>Save more money. Secure your future.</h3>
   </div>
   <div class="app container">
@@ -17,7 +17,20 @@
       <div class="col-sm-12 col-md-6">
 	{% for goal in user.goals %}
 	<div class="goal {% if goal.balance >= goal.target %}green{% endif %}">
-	  <p class="goal-name">Goal: {{goal.name|title}}</p>
+	  <p class="goal-name">Goal: <span class="goalname">{{goal.name|title}}</span>
+      <!--<span onClick="remove_goal()" class="remove-goal-button" id="remove-goal-button-{{ goal.name }}">x</span>-->
+    </p>
+    <!--script tags here
+    var goalname = document.getElementsByClassName('goalname').innerHTML;
+    goalname = goalname.toLowerCase()
+    var button = document.getElementById("remove-goal-button-"+goalname);
+    function remove_goal(){
+      console.log("removing goal")
+      event.preventDefault()
+      console.log(goalname)
+      document.getElementById("remove-goal-button-"+goalname).innerHTML = "two curly brackets del_goal(user, goal.name) "
+    }
+    script tags here-->
 	  <div class="row">
 	    <div class="col-sm-12 col-md-6">
 	      <p class="goal-balance">Balance: ${{goal.balance}}</p>
