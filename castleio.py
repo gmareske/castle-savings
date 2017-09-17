@@ -79,6 +79,8 @@ def set_goal(user,goal, amt):
 
 def generate_response(action,amt,goal,text,user): 
     if action in ["save", "spend"]:
+        if not amt:
+            return "How much are we talking here? Please send the message agin, with a monetary amount"
         if action == "spend":
             amt *= -1
         return change_money(user, goal, amt)
@@ -89,6 +91,6 @@ def generate_response(action,amt,goal,text,user):
     elif goal == None:
         return "I didn't understand your goal. Please send the message again, with a goal at the end."
     elif amt == None:
-        return "How much are we talking here? Please send the message again, with an amount that you are saving."
+        return "How much are we talking here? Please send the message again, with a monetary amount"
     else:
         return "I didn't understand your message :("
