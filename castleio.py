@@ -1,4 +1,4 @@
-from textblob import TextBlob
+from textblob import TextBlob, Word
 from word2number import w2n
 from user import User
 from goal import Goal
@@ -14,7 +14,7 @@ def find_action(sent):
     spend_words = ["spent", "spend", "withdrew", "withdraw","reduced", "borrowed", "stole", "took", "took out", "removed"]
     goal_words = ["goal", "buy", "new", "take a"]
     list_words = ["list", "tell", "tell me"]
-    
+
     for word, pos in sent.pos_tags:
         if pos[0] == "V":
             if word in save_words:
@@ -36,6 +36,7 @@ def find_amount(sent):
             amount = float(word)
         except ValueError:
             pass
+    for word, pos in sent.pos_tags:
         try:
             amount = w2n.word_to_num(word)
         except:
@@ -75,22 +76,43 @@ def parse_msg(text, user):
     print(action, amount, goal)
     return generate_response(action,amount,goal,text,user)
 
+def check_goal_helper(goal, user):
+    goalobj = user.find_goal(goal)
+    if goalobj:
+        return goalobj
+
+def check_goal(goal, user):
+    if check_goal_helper(goal, user):
+        return check_goal_helper(goal, user)
+    goal = goal.pluralize()
+    if check_goal_helper(goal, user):
+        return check_goal_helper(goal, user)
+    goal = goal.singularize()
+    if check_goal_helper(goal, user):
+        return check_goal_helper(goal, user)
+    goal = Word(goal)
+    goal = goal.lemmatize()
+    if check_goal_helper(goal, user):
+        return check_goal_helper(goal, user)
+
 def change_money(user, goal, amt):
-        goalobj = user.find_goal(goal)
+        goalobj = check_goal(goal, user)
         if not goalobj:
             return "{} isn't one of your goals".format(goal)
         goalobj.balance += amt
         if goalobj.balance >= goalobj.target:
             return get_response('congrats', amt=goalobj.target, goal=goalobj.name)
+        elif amt <= 0:
+            return get_response('balancedown',amt=abs(amt),target=goalobj.target,goal=goalobj.name)
         else:
-            return get_response('balance',amt=goalobj.balance,target=goalobj.target,goal=goalobj.name)
+            return get_response('balanceup',amt=amt,target=goalobj.target,goal=goalobj.name)
 
 def set_goal(user,goal, amt):
         user.add_goal(goal,amt)
         print(user.goals)
         return get_response('new_goal',goal=goal,amt=amt)
 
-def generate_response(action,amt,goal,text,user): 
+def generate_response(action,amt,goal,text,user):
     if action in ["save", "spend"]:
         if not amt:
             return "How much are we talking here? Please send the message agin, with a monetary amount"
