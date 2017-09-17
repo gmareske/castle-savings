@@ -18,8 +18,15 @@
 	{% for goal in user.goals %}
 	<div class="goal {% if goal.balance >= goal.target %}green{% endif %}">
 	  <p class="goal-name">Goal: {{goal.name|title}}</p>
-	  <p class="goal-balance">Balance: ${{goal.balance}}</p>
-	  <p class="goal-target">Target: ${{goal.target}}</p>
+	  <div class="row">
+	    <div class="col-sm-12 col-md-6">
+	      <p class="goal-balance">Balance: ${{goal.balance}}</p>
+	      <p class="goal-target">Target: ${{goal.target}}</p>
+	    </div>
+	    <div class="col-sm-12 col-md-6"><div class="progress-bar">
+		<div class="progress" style="width:{{goal.balance / goal.target * 100}}%"></div>
+	    </div></div>
+	  </div>
 	</div>
 	{% endfor %}
       </div>
