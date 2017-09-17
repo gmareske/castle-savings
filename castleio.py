@@ -122,9 +122,9 @@ def change_money(user, goal, amt):
         if goalobj.balance >= goalobj.target:
             return get_response('congrats', amt=goalobj.target, goal=goalobj.name) + '\n' + get_twitter_link(goal)
         elif amt <= 0:
-            return get_response('balancedown',amt=abs(amt),target=goalobj.target,goal=goalobj.name)
+            return get_response('balancedown',amt=goalobj.balance,target=goalobj.target,goal=goalobj.name)
         else:
-            return get_response('balanceup',amt=amt,target=goalobj.target,goal=goalobj.name)
+            return get_response('balanceup',amt=goalobj.balance,target=goalobj.target,goal=goalobj.name)
 
 def set_goal(user,goal, amt):
         user.add_goal(goal,amt)
