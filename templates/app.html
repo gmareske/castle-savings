@@ -112,21 +112,5 @@
   const msgs = document.getElementById("message-window");
   msgs.scrollTop = msgs.scrollHeight;
 
-  // render twitter links for the love of god
-  const replaceTwitterLinks = function() {
-  const twitter_regex = /(https:\/\/twitter\.com.+)/g;
-  let messages = document.getElementsByTagName('p');
-  messages = Array.from(messages);
-  messages.forEach(function (m) {
-  let t = m.innerHTML;
-  console.log(t);
-  twitter_link = t.match(twitter_regex)[0];
-  console.log(twitter_link);
-  if (match == null) { return; }
-  let new_link = "Share on Twitter!".link(twitter_link);
-  t.replace(twitter_regex,"");
-  m.innerHTML = t;
-  });
-  }
 </script>
 </body>
