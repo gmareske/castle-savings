@@ -15,21 +15,29 @@ def find_action(sent):
     new_goal_words = ["goal", "buy", "new", "take a", "create", "make", "set"]
     del_goal_words = ["remove", "delete"]
     list_words = ["list", "tell", "tell me"]
+    words_of_change = ["change", "update", "changes", "changed", "updated"]
 
     for word, pos in sent.pos_tags:
-        if pos[0] == "V":
-            if word in save_words:
-                action = "save"
-            elif word in spend_words:
-                action = "spend"
-            elif word in del_goal_words:
-                action = "del_goal"
-            elif word in new_goal_words:
-                action = "new_goal"
-            elif word in list_words:
-                action = "list"
-            else:
-                action = word
+        if word in save_words:
+            action = "save"
+            break
+        elif word in spend_words:
+            action = "spend"
+            break
+        elif word in del_goal_words:
+            action = "del_goal"
+            break
+        elif word in new_goal_words:
+            action = "new_goal"
+            break
+        elif word in list_words:
+            action = "list"
+            break
+        elif word in words_of_change:
+            action = "change"
+            break
+        else:
+            action = word
     return action
 
 def find_amount(sent):
@@ -122,10 +130,20 @@ def unset_goal(user,goal):
         print(user.goals)
         return get_response('del_goal',goal=goal)
 
+def change_goal(user, goal, text, amt):
+    goalobj = check_goal(goal, user)
+    text = TextBlob(text)
+    text = text.words
+    if amt:
+        goalobj.target = amt
+        return get_response('change_goal_target', amt=amt, goal=goal)
+    goalobj.name = text[-1]
+    return get_response('change_goal_name', goal=goalobj.name)
+
+
+
 def generate_response(action,amt,goal,text,user):
     if action in ["save", "spend"]:
-        if not amt:
-            return "How much are we talking here? Please send the message again, with a monetary amount"
         if action == "spend":
             amt *= -1
         return change_money(user, goal, amt)
@@ -133,6 +151,8 @@ def generate_response(action,amt,goal,text,user):
         return set_goal(user,goal,amt)
     elif action == "del_goal":
         return unset_goal(user, goal)
+    elif action == "change":
+        return change_goal(user, goal, text, amt)
     elif action == "list" or goal == "goals":
         return get_response('list_goal',goal=', '.join(g.name for g in user.goals))
     elif action == "greet":

@@ -28,7 +28,13 @@ RESPS = {
         'Price is what you pay. Your {goal} is what you get.'
     ],
     'del_goal': [
-    'You are no longer saving towards a {goal}. Be sure to save the money somewhere else.'
+        'You are no longer saving towards a {goal}. Be sure to save the money somewhere else.'
+    ],
+    'change_goal_name': [
+        'Your goal is now a {goal}, go and get it!',
+    ],
+    'change_goal_target': [
+        'Your target for your {goal} is now {amt}, go forth and conquer',
     ],
     'list_goal': [
         'Here are your missions, if you choose to accept them: {goal}',
