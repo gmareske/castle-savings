@@ -25,8 +25,6 @@ def find_action(sent):
                 action = "goal"
             elif word in list_words:
                 action = "list"
-            elif word in greeting_words:
-                action = "greet"
             else:
                 action = word
     return action

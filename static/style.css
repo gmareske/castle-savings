@@ -26,21 +26,35 @@
 .app {
     font-size: 16px;
 }
+.goal {
+    background: lightgrey;
+    border-radius: 10px;
+    padding: 0.5vw;
+    margin: 1vw;
+}
+.goal-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+.green {
+    background: lightgreen;
+}
 .message-wrapper {
     overflow-y: scroll;
-    max-height: 800px;
+    max-height: 30vw;
 }
 .message {
     padding: 0.5vw;
     margin: 1vw 0 1vw 0;
-    max-width: 300px;
     border-radius: 10px;
     position: relative;
 }
 .user {
+    
     text-align: right;
     background-color: #0076FF;
     color: azure;
+    margin-left: 30%;
 }
 .user:after {
     content: '';
@@ -54,13 +68,14 @@
     border-right: solid 5px transparent;
 }
 .bot {
+    margin-right: 30%;
     background-color: lightgray;
 }
 .bot:after {
-pp    content: '';
+    content: '';
     position: absolute;
     top: 100%;
-    left: 20%;
+    right: 80%;
     width: 0;
     height: 0;
     border-top: solid 10px #lightgray;
