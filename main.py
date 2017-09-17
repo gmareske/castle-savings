@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, request, redirect, render_template, url_for
 #from textblob import TextBlob
 from twilio.twiml.messaging_response import MessagingResponse, Message
@@ -6,7 +8,6 @@ from castleio import parse_msg
 from user import User
 
 app = Flask(__name__)
-
 
 USERS = {}
 # multiple users support
@@ -22,6 +23,11 @@ USERS["+19132068204"].add_goal("bicycle", 200, balance=200)
 USERS["+19132068204"].add_goal("vacation", 600, balance=200)
 USERS["+15155081003"].add_goal("flamethrower",6900)
 # END TEST DATA
+
+def render_twitter_link(reply, link):
+    return re.sub(TWITTER_LINK_REGEX,
+                  '',
+                  reply)
 
 @app.route("/hello",methods=['GET'])
 def hello():

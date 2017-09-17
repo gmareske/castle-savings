@@ -1,5 +1,8 @@
+import urllib
+
 from textblob import TextBlob, Word
 from word2number import w2n
+
 from user import User
 from goal import Goal
 from responses import get_response
@@ -7,6 +10,10 @@ from responses import get_response
 def clean_text(text):
     text = text.replace("$", "").replace(",", "").replace("!", "").replace("@", " ").replace("#", "").replace("%", " ").replace("^", " ").replace("&", " ").replace("(", "").replace(")", "").replace("*", "").replace(":", "").replace(";", "")
     return(text)
+
+def get_twitter_link(goal):
+    tweet = 'I just completed my savings goal for {}! https://github.com/gmareske/saveit'.format(goal)
+    return 'Share this: https://twitter.com/intent/tweet?text={}'.format(urllib.parse.quote(tweet,safe='/'))
 
 def find_action(sent):
     action = None
@@ -113,7 +120,7 @@ def change_money(user, goal, amt):
             return "{} isn't one of your goals".format(goal)
         goalobj.balance += amt
         if goalobj.balance >= goalobj.target:
-            return get_response('congrats', amt=goalobj.target, goal=goalobj.name)
+            return get_response('congrats', amt=goalobj.target, goal=goalobj.name) + '\n' + get_twitter_link(goal)
         elif amt <= 0:
             return get_response('balancedown',amt=abs(amt),target=goalobj.target,goal=goalobj.name)
         else:
@@ -139,8 +146,6 @@ def change_goal(user, goal, text, amt):
         return get_response('change_goal_target', amt=amt, goal=goal)
     goalobj.name = text[-1]
     return get_response('change_goal_name', goal=goalobj.name)
-
-
 
 def generate_response(action,amt,goal,text,user):
     if action in ["save", "spend"]:

@@ -82,6 +82,7 @@ input[type=submit] {
     margin: 1vw 0 1vw 0;
     border-radius: 10px;
     position: relative;
+    overflow-wrap: break-word;
 }
 .user {
 
