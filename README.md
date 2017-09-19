@@ -1,5 +1,5 @@
 # Save It!
-Hack UIowa project - a chatbot for slaying personal savings goals. Winner, Best Fintech/Insuretech Hack
+Hack UIowa project - a chatbot for slaying personal savings goals. Winner, Best Fintech/Insuretech Hack.
 
 ### US savings rate in decline
 According to FRED data, personal savings as percent of DPI (that is, how much people save as a percentage of their after-tax income) was 3.5% in July 2017.
